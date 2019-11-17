@@ -1,27 +1,33 @@
 package com.ferick.alexander;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Datagen {
 
-    public String get(String template) {
-        String wholeRegex = "\\$\\{-(\\w+)\\s([\\w.]+)\\s?(\\w+\\.?\\w?)?\\s?(\\w+)?\\s?(\\w+)?-}";
-        String leftRemovable = "\\$\\{-";
-        String rightRemovable = "-}";
+    private static final String WHOLE_REGEX = "\\$\\{-(\\w+)\\s([\\w.]+)\\s?(\\w+\\.?\\w?)?\\s?(\\w+)?\\s?(\\w+)?-}";
+    private static final String LEFT_REMOVABLE = "\\$\\{-";
+    private static final String RIGHT_REMOVABLE = "-}";
 
-        Pattern p = Pattern.compile(wholeRegex);
-        Matcher m = p.matcher(template);
-        int count = 1;
+    private ReplacementHandler replacementHandler;
+
+    public Datagen() {
+        replacementHandler = new ReplacementHandler();
+    }
+
+    public String get(final String template, final Map<String, String> substituteValues) {
+        String result = template;
+        Pattern p = Pattern.compile(WHOLE_REGEX);
+        Matcher m = p.matcher(result);
         while (m.find()) {
-            String printedString = m.group();
-            String actual = printedString.replaceFirst(leftRemovable, "").replaceFirst(rightRemovable, "");
-            actual = actual.toUpperCase().replaceAll("\\s+", "");
-            template = template.replaceFirst(Pattern.quote(printedString), actual + "_" + count);
-            m = p.matcher(template);
-            count++;
+            String matchedString = m.group();
+            String precept = matchedString.replaceFirst(LEFT_REMOVABLE, "").replaceFirst(RIGHT_REMOVABLE, "");
+            String replacement = replacementHandler.getReplacement(precept, substituteValues);
+            result = result.replaceFirst(Pattern.quote(matchedString), replacement);
+            m = p.matcher(result);
         }
 
-        return template;
+        return result;
     }
 }
