@@ -6,6 +6,9 @@ import static org.junit.Assert.*;
 
 public class RandomPerformerTest {
 
+    private static final String CONSONANTS = "bcdfghjklmnpqrstvwxz";
+    private static final String VOWELS = "aeiouy";
+
     @Test
     public void performAlphabeticTest() {
         RandomPerformer performer = new RandomPerformer();
@@ -126,5 +129,32 @@ public class RandomPerformerTest {
             errorMessage = e.getMessage();
         }
         assertEquals("Wrong double argument!", errorMessage);
+    }
+
+    @Test
+    public void performNameTest() {
+        RandomPerformer performer = new RandomPerformer();
+        String[] args = new String[]{"name"};
+        String actualResult = performer.perform(args);
+        assertFalse("Random result is empty!", actualResult.isEmpty());
+        assertTrue(actualResult.length() >= 4 && actualResult.length() <= 8);
+        int count = 0;
+        for (Character character : actualResult.toCharArray()) {
+            assertTrue(String.format("Character %s is not a letter!", character),
+                    Character.isLetter(character));
+            if (count == 0) {
+                assertTrue(String.format("Character %s is not upper case!", character),
+                        Character.isUpperCase(character));
+                assertTrue(String.format("Character %s is not consonant!", character),
+                        CONSONANTS.indexOf(Character.toLowerCase(character)) != -1);
+            } else if (count % 2 == 0) {
+                assertTrue(String.format("Character %s is not consonant!", character),
+                        CONSONANTS.indexOf(character) != -1);
+            } else {
+                assertTrue(String.format("Character %s is not vowel!", character),
+                        VOWELS.indexOf(character) != -1);
+            }
+            count++;
+        }
     }
 }
