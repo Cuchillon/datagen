@@ -5,6 +5,11 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class RandomPerformer {
 
+    private static final String ALPHABETIC = "alph";
+    private static final String ALPHANUMERIC = "alphnum";
+    private static final String NUMERIC = "num";
+    private static final String DOUBLE = "double";
+    private static final String NAME = "name";
     private static final String CONSONANTS = "bcdfghjklmnpqrstvwxz";
     private static final String VOWELS = "aeiouy";
 
@@ -16,19 +21,19 @@ public class RandomPerformer {
         String result = "";
 
         switch (args[0]) {
-            case "alph":
+            case ALPHABETIC:
                 result = RandomStringUtils.randomAlphabetic(Integer.parseInt(args[1]));
                 break;
-            case "alphnum":
+            case ALPHANUMERIC:
                 result = RandomStringUtils.randomAlphanumeric(Integer.parseInt(args[1]));
                 break;
-            case "num":
+            case NUMERIC:
                 result = RandomStringUtils.randomNumeric(Integer.parseInt(args[1]));
                 break;
-            case "double":
+            case DOUBLE:
                 result = generateDouble(args[1]);
                 break;
-            case "name":
+            case NAME:
                 result = generateName();
                 break;
             default:

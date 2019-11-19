@@ -10,6 +10,11 @@ import java.util.Map;
 
 public class ReplacementHandler {
 
+    private static final String RANGE = "range";
+    private static final String RANDOM = "random";
+    private static final String DATE = "date";
+    private static final String SET = "set";
+
     public String getReplacement(final String precept, final Map<String, String> substituteValues) {
         String[] preceptArray = precept.split(" ");
         String method = preceptArray[0].toLowerCase();
@@ -18,16 +23,16 @@ public class ReplacementHandler {
         String result = "";
 
         switch (method) {
-            case "range":
+            case RANGE:
                 result = new RangePerformer().perform(args);
                 break;
-            case "random":
+            case RANDOM:
                 result = new RandomPerformer().perform(args);
                 break;
-            case "date":
+            case DATE:
                 result = new DatePerformer().perform(args);
                 break;
-            case "set":
+            case SET:
                 result = new SetPerformer().perform(args, substituteValues);
                 break;
             default:
