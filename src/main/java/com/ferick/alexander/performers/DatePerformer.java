@@ -49,6 +49,9 @@ public class DatePerformer {
             case ISO_FORMAT:
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 formattedDate = dateFormat.format(date);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown date format!");
         }
         return formattedDate;
     }
