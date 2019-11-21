@@ -10,6 +10,13 @@ public class DatePerformer {
     private static final String DATE_IN_FUTURE = "future";
     private static final String MILLISECONDS_FORMAT = "millisec";
     private static final String ISO_FORMAT = "iso8601";
+    private static final String SECONDS_FORMAT = "sec";
+    private static final String MINUTES_FORMAT = "min";
+    private static final String HOUR_FORMAT = "hour";
+    private static final String DAY_FORMAT = "day";
+    private static final Long DAY_MILLISECONDS = 86400000L;
+    private static final Long HOUR_MILLISECONDS = 3600 * 1000L;
+    private static final Long MINUTE_MILLISECONDS = 60 * 1000L;
 
     public String perform(final String[] args) {
         if (args.length < 2 || args.length > 4) {
@@ -23,10 +30,10 @@ public class DatePerformer {
                 result = getPresentDate(args[1]);
                 break;
             case DATE_IN_PAST:
-                //
+                result = getDateInPast(args[1], args[2], args[3]);
                 break;
             case DATE_IN_FUTURE:
-                //
+                result = getDateInFuture(args[1], args[2], args[3]);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown argument to perform date replacing!");
@@ -37,10 +44,24 @@ public class DatePerformer {
 
     private String getPresentDate(String format) {
         Date date = new Date();
-        return getFormattedDate(format, date);
+        return formatDate(format, date);
     }
 
-    private String getFormattedDate(String format, Date date) {
+    private String getDateInPast(String timeQuantity, String timeType, String format) {
+        long today = new Date().getTime();
+        long ago = calculateTimePeriod(timeQuantity, timeType);
+        Date date = new Date(today - ago);
+        return formatDate(format, date);
+    }
+
+    private String getDateInFuture(String timeQuantity, String timeType, String format) {
+        long today = new Date().getTime();
+        long ago = calculateTimePeriod(timeQuantity, timeType);
+        Date date = new Date(today + ago);
+        return formatDate(format, date);
+    }
+
+    private String formatDate(String format, Date date) {
         String formattedDate = "";
         switch (format) {
             case MILLISECONDS_FORMAT:
@@ -54,5 +75,27 @@ public class DatePerformer {
                 throw new IllegalArgumentException("Unknown date format!");
         }
         return formattedDate;
+    }
+
+    private long calculateTimePeriod(String timeQuantity, String timeType) {
+        long period;
+        long time = Long.parseLong(timeQuantity);
+        switch (timeType) {
+            case SECONDS_FORMAT:
+                period = time * 1000L;
+                break;
+            case MINUTES_FORMAT:
+                period = time * MINUTE_MILLISECONDS;
+                break;
+            case HOUR_FORMAT:
+                period = time * HOUR_MILLISECONDS;
+                break;
+            case DAY_FORMAT:
+                period = time * DAY_MILLISECONDS;
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown time type format!");
+        }
+        return period;
     }
 }
