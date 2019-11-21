@@ -61,16 +61,13 @@ public class RandomPerformer {
 
         for (int i = 0; i < nameLength; i++) {
             if (i == 0) {
-                int consonantIndex = rand.nextInt(20);
-                Character character = CONSONANTS.charAt(consonantIndex);
+                Character character = CONSONANTS.charAt(rand.nextInt(20));
                 result.append(Character.toUpperCase(character));
             } else if (i % 2 == 0) {
-                int consonantIndex = rand.nextInt(20);
-                Character character = CONSONANTS.charAt(consonantIndex);
+                Character character = CONSONANTS.charAt(rand.nextInt(20));
                 result.append(character);
             } else {
-                int consonantIndex = rand.nextInt(6);
-                Character character = VOWELS.charAt(consonantIndex);
+                Character character = VOWELS.charAt(rand.nextInt(6));
                 result.append(character);
             }
         }
