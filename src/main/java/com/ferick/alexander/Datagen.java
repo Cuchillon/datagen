@@ -1,5 +1,9 @@
 package com.ferick.alexander;
 
+import com.ferick.alexander.utils.MapUtils;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,5 +33,29 @@ public class Datagen {
         }
 
         return result;
+    }
+
+    public String get(final String template, final String... substituteValues) {
+        return get(template, MapUtils.asMap(substituteValues));
+    }
+
+    public String get(final String template) {
+        return get(template, new HashMap<>());
+    }
+
+    public List<String> get(Integer count, final String template, final Map<String, String> substituteValues) {
+        List<String> resultList = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            resultList.add(get(template, substituteValues));
+        }
+        return resultList;
+    }
+
+    public List<String> get(Integer count, final String template, final String... substituteValues) {
+        return get(count, template, MapUtils.asMap(substituteValues));
+    }
+
+    public List<String> get(Integer count, final String template) {
+        return get(count, template, new HashMap<>());
     }
 }
