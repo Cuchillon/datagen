@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.ferick.alexander.utils.DateConfig;
+import com.ferick.alexander.utils.Config;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -40,7 +40,7 @@ public class DatePerformerTest {
     @Test
     public void performDateInPastTest() {
         DatePerformer performer = new DatePerformer();
-        long twoHourAgo = new Date().getTime() - (DateConfig.HOUR_MILLISECONDS * 2L);
+        long twoHourAgo = new Date().getTime() - (Config.HOUR_MILLISECONDS * 2L);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH");
         String formattedPastDate = dateFormat.format(twoHourAgo);
 
@@ -53,7 +53,7 @@ public class DatePerformerTest {
     @Test
     public void performDateInFutureTest() {
         DatePerformer performer = new DatePerformer();
-        long twoDaysForward = new Date().getTime() + (DateConfig.DAY_MILLISECONDS * 2L);
+        long twoDaysForward = new Date().getTime() + (Config.DAY_MILLISECONDS * 2L);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedFutureDate = dateFormat.format(twoDaysForward);
 

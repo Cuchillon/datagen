@@ -5,15 +5,11 @@ import com.ferick.alexander.performers.RandomPerformer;
 import com.ferick.alexander.performers.RangePerformer;
 import com.ferick.alexander.performers.SetPerformer;
 
+import com.ferick.alexander.utils.Config;
 import java.util.Arrays;
 import java.util.Map;
 
 public class ReplacementHandler {
-
-    private static final String RANGE = "range";
-    private static final String RANDOM = "random";
-    private static final String DATE = "date";
-    private static final String SET = "set";
 
     public String getReplacement(final String precept, final Map<String, String> substituteValues) {
         String[] preceptArray = precept.split(" ");
@@ -23,16 +19,16 @@ public class ReplacementHandler {
         String result = "";
 
         switch (method) {
-            case RANGE:
+            case Config.RANGE:
                 result = new RangePerformer().perform(args);
                 break;
-            case RANDOM:
+            case Config.RANDOM:
                 result = new RandomPerformer().perform(args);
                 break;
-            case DATE:
+            case Config.DATE:
                 result = new DatePerformer().perform(args);
                 break;
-            case SET:
+            case Config.SET:
                 result = new SetPerformer().perform(args, substituteValues);
                 break;
             default:

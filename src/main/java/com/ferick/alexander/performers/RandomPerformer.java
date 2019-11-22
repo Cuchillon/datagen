@@ -1,17 +1,10 @@
 package com.ferick.alexander.performers;
 
+import com.ferick.alexander.utils.Config;
 import java.util.Random;
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class RandomPerformer {
-
-    private static final String ALPHABETIC = "alph";
-    private static final String ALPHANUMERIC = "alphnum";
-    private static final String NUMERIC = "num";
-    private static final String DOUBLE = "double";
-    private static final String NAME = "name";
-    private static final String CONSONANTS = "bcdfghjklmnpqrstvwxz";
-    private static final String VOWELS = "aeiouy";
 
     public String perform(final String[] args) {
         if (args.length > 2) {
@@ -21,19 +14,19 @@ public class RandomPerformer {
         String result = "";
 
         switch (args[0]) {
-            case ALPHABETIC:
+            case Config.ALPHABETIC:
                 result = RandomStringUtils.randomAlphabetic(Integer.parseInt(args[1]));
                 break;
-            case ALPHANUMERIC:
+            case Config.ALPHANUMERIC:
                 result = RandomStringUtils.randomAlphanumeric(Integer.parseInt(args[1]));
                 break;
-            case NUMERIC:
+            case Config.NUMERIC:
                 result = RandomStringUtils.randomNumeric(Integer.parseInt(args[1]));
                 break;
-            case DOUBLE:
+            case Config.DOUBLE:
                 result = generateDouble(args[1]);
                 break;
-            case NAME:
+            case Config.NAME:
                 result = generateName();
                 break;
             default:
@@ -61,13 +54,13 @@ public class RandomPerformer {
 
         for (int i = 0; i < nameLength; i++) {
             if (i == 0) {
-                Character character = CONSONANTS.charAt(rand.nextInt(20));
+                Character character = Config.CONSONANTS.charAt(rand.nextInt(20));
                 result.append(Character.toUpperCase(character));
             } else if (i % 2 == 0) {
-                Character character = CONSONANTS.charAt(rand.nextInt(20));
+                Character character = Config.CONSONANTS.charAt(rand.nextInt(20));
                 result.append(character);
             } else {
-                Character character = VOWELS.charAt(rand.nextInt(6));
+                Character character = Config.VOWELS.charAt(rand.nextInt(6));
                 result.append(character);
             }
         }

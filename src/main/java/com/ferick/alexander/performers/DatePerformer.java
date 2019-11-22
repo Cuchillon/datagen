@@ -1,6 +1,6 @@
 package com.ferick.alexander.performers;
 
-import com.ferick.alexander.utils.DateConfig;
+import com.ferick.alexander.utils.Config;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,13 +14,13 @@ public class DatePerformer {
         String result = "";
 
         switch (args[0]) {
-            case DateConfig.PRESENT_DATE:
+            case Config.PRESENT_DATE:
                 result = getPresentDate(args[1]);
                 break;
-            case DateConfig.DATE_IN_PAST:
+            case Config.DATE_IN_PAST:
                 result = getDateInPast(args[1], args[2], args[3]);
                 break;
-            case DateConfig.DATE_IN_FUTURE:
+            case Config.DATE_IN_FUTURE:
                 result = getDateInFuture(args[1], args[2], args[3]);
                 break;
             default:
@@ -52,10 +52,10 @@ public class DatePerformer {
     private String formatDate(String format, Date date) {
         String formattedDate = "";
         switch (format) {
-            case DateConfig.MILLISECONDS_FORMAT:
+            case Config.MILLISECONDS_FORMAT:
                 formattedDate = String.valueOf(date.getTime());
                 break;
-            case DateConfig.ISO_FORMAT:
+            case Config.ISO_FORMAT:
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 formattedDate = dateFormat.format(date);
                 break;
@@ -69,17 +69,17 @@ public class DatePerformer {
         long period;
         long time = Long.parseLong(timeQuantity);
         switch (timeType) {
-            case DateConfig.SECONDS_FORMAT:
+            case Config.SECONDS_FORMAT:
                 period = time * 1000L;
                 break;
-            case DateConfig.MINUTES_FORMAT:
-                period = time * DateConfig.MINUTE_MILLISECONDS;
+            case Config.MINUTES_FORMAT:
+                period = time * Config.MINUTE_MILLISECONDS;
                 break;
-            case DateConfig.HOUR_FORMAT:
-                period = time * DateConfig.HOUR_MILLISECONDS;
+            case Config.HOUR_FORMAT:
+                period = time * Config.HOUR_MILLISECONDS;
                 break;
-            case DateConfig.DAY_FORMAT:
-                period = time * DateConfig.DAY_MILLISECONDS;
+            case Config.DAY_FORMAT:
+                period = time * Config.DAY_MILLISECONDS;
                 break;
             default:
                 throw new IllegalArgumentException("Unknown time type format!");
