@@ -3,7 +3,6 @@ package com.ferick.alexander.utils;
 public class Config {
 
     // Method config
-    public static final String RANGE = "range";
     public static final String RANDOM = "random";
     public static final String DATE = "date";
     public static final String SET = "set";

@@ -2,9 +2,7 @@ package com.ferick.alexander;
 
 import com.ferick.alexander.performers.DatePerformer;
 import com.ferick.alexander.performers.RandomPerformer;
-import com.ferick.alexander.performers.RangePerformer;
 import com.ferick.alexander.performers.SetPerformer;
-
 import com.ferick.alexander.utils.Config;
 import java.util.Arrays;
 import java.util.Map;
@@ -19,9 +17,6 @@ public class ReplacementHandler {
         String result = "";
 
         switch (method) {
-            case Config.RANGE:
-                result = new RangePerformer().perform(args);
-                break;
             case Config.RANDOM:
                 result = new RandomPerformer().perform(args);
                 break;
