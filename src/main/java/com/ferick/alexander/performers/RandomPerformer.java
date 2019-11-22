@@ -43,6 +43,11 @@ public class RandomPerformer {
         }
         String intValue = RandomStringUtils.randomNumeric(Integer.parseInt(lengthValues[0]));
         String fractionalValue = RandomStringUtils.randomNumeric(Integer.parseInt(lengthValues[1]));
+
+        while (intValue.startsWith("0")) {
+            intValue = intValue.substring(1);
+        }
+
         return intValue + "." + fractionalValue;
     }
 

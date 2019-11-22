@@ -159,4 +159,18 @@ public class RandomPerformerTest {
             count++;
         }
     }
+
+    @Test
+    public void multipleDoubleTest() {
+        RandomPerformer performer = new RandomPerformer();
+        String[] args = new String[]{"double", "4.2"};
+
+        int count = 0;
+        while (count < 1000) {
+            String actualResult = performer.perform(args);
+            assertFalse(String.format("Number starts with zero on %d time: %s", count, actualResult),
+                    actualResult.startsWith("0"));
+            count++;
+        }
+    }
 }
