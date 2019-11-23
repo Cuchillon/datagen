@@ -54,10 +54,10 @@ public class RandomPerformerTest {
         String[] args = new String[]{"double", "4.2"};
         String actualResult = performer.perform(args);
         assertFalse("Random result is empty!", actualResult.isEmpty());
-        assertEquals(7, actualResult.length());
+        assertTrue(actualResult.length() <= 7 && actualResult.length() >= 4);
         int count = 0;
         for (Character character : actualResult.toCharArray()) {
-            if (count == 4) {
+            if (count == (actualResult.length() - 3)) {
                 assertEquals(String.format("Character %s is not a point!", character),
                         '.', (char) character);
             } else {
