@@ -20,6 +20,13 @@ public class Datagen {
         replacementHandler = new ReplacementHandler();
     }
 
+    /**
+     * Method takes a template and returns a string with random and substitute values
+     *
+     * @param template a string with patterns to be substituted
+     * @param substituteValues a map with values to be returned instead of 'set' patterns
+     * @return string with random and substitute values
+     */
     public String get(final String template, final Map<String, String> substituteValues) {
         String result = template;
         Pattern p = Pattern.compile(WHOLE_REGEX);
@@ -35,14 +42,35 @@ public class Datagen {
         return result;
     }
 
+    /**
+     * Method takes a template and returns a string with random and substitute values
+     *
+     * @param template a string with patterns to be substituted
+     * @param substituteValues key-value pairs with values to be returned instead of 'set' patterns
+     * @return string with random and substitute values
+     */
     public String get(final String template, final String... substituteValues) {
         return get(template, MapUtils.asMap(substituteValues));
     }
 
+    /**
+     * Method takes a template and returns a string with random values
+     *
+     * @param template a string with patterns to be substituted
+     * @return string with random values
+     */
     public String get(final String template) {
         return get(template, new HashMap<>());
     }
 
+    /**
+     * Method takes a template and returns a list of strings with random and substitute values
+     *
+     * @param count number of strings to be in the list
+     * @param template a string with patterns to be substituted
+     * @param substituteValues a map with values to be returned instead of 'set' patterns
+     * @return list of strings with random and substitute values
+     */
     public List<String> get(Integer count, final String template, final Map<String, String> substituteValues) {
         List<String> resultList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -51,10 +79,25 @@ public class Datagen {
         return resultList;
     }
 
+    /**
+     * Method takes a template and returns a list of strings with random and substitute values
+     *
+     * @param count number of strings to be in the list
+     * @param template a string with patterns to be substituted
+     * @param substituteValues key-value pairs with values to be returned instead of 'set' patterns
+     * @return list of strings with random and substitute values
+     */
     public List<String> get(Integer count, final String template, final String... substituteValues) {
         return get(count, template, MapUtils.asMap(substituteValues));
     }
 
+    /**
+     * Method takes a template and returns a list of strings with random values
+     *
+     * @param count number of strings to be in the list
+     * @param template a string with patterns to be substituted
+     * @return list of strings with random values
+     */
     public List<String> get(Integer count, final String template) {
         return get(count, template, new HashMap<>());
     }
