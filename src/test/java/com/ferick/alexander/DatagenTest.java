@@ -3,6 +3,8 @@ package com.ferick.alexander;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -94,5 +96,27 @@ public class DatagenTest {
             errorMessage = e.getMessage();
         }
         assertEquals("Unknown method to perform replacing!", errorMessage);
+    }
+
+    @Test
+    public void getListWithNameSavingTest() {
+        Datagen datagen = new Datagen();
+        String template = "{ \"saving\": \"${-random name person.email-}\", \"email\": \"${-set person.email-}@example.com\" }";
+        List<String> actualResult = datagen.get(2, template);
+        assertTrue("Names are not saved!", matchNames(actualResult));
+    }
+
+    private boolean matchNames(List<String> actualResult) {
+        return actualResult.stream().allMatch(item -> {
+            String regex = "saving\": \"\\w+";
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(item);
+            String result = "";
+            while (m.find()) {
+                String matchedString = m.group();
+                result = matchedString.replaceFirst("saving\": \"", "").replaceFirst("\"", "");
+            }
+            return item.contains(result.toLowerCase() + "@example.com");
+        });
     }
 }

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Test;
 
 public class RandomPerformerTest {
@@ -15,7 +17,8 @@ public class RandomPerformerTest {
     public void performAlphabeticTest() {
         RandomPerformer performer = new RandomPerformer();
         String[] args = new String[]{"alph", "8"};
-        String actualResult = performer.perform(args);
+        Map<String, String> substituteValues = new HashMap<>();
+        String actualResult = performer.perform(args, substituteValues);
         assertFalse("Random result is empty!", actualResult.isEmpty());
         assertEquals(8, actualResult.length());
         for (Character character : actualResult.toCharArray()) {
@@ -27,7 +30,8 @@ public class RandomPerformerTest {
     public void performAlphanumericTest() {
         RandomPerformer performer = new RandomPerformer();
         String[] args = new String[]{"alphnum", "10"};
-        String actualResult = performer.perform(args);
+        Map<String, String> substituteValues = new HashMap<>();
+        String actualResult = performer.perform(args, substituteValues);
         assertFalse("Random result is empty!", actualResult.isEmpty());
         assertEquals(10, actualResult.length());
         for (Character character : actualResult.toCharArray()) {
@@ -40,7 +44,8 @@ public class RandomPerformerTest {
     public void performNumericTest() {
         RandomPerformer performer = new RandomPerformer();
         String[] args = new String[]{"num", "7"};
-        String actualResult = performer.perform(args);
+        Map<String, String> substituteValues = new HashMap<>();
+        String actualResult = performer.perform(args, substituteValues);
         assertFalse("Random result is empty!", actualResult.isEmpty());
         assertEquals(7, actualResult.length());
         for (Character character : actualResult.toCharArray()) {
@@ -52,7 +57,8 @@ public class RandomPerformerTest {
     public void performDoubleTest() {
         RandomPerformer performer = new RandomPerformer();
         String[] args = new String[]{"double", "4.2"};
-        String actualResult = performer.perform(args);
+        Map<String, String> substituteValues = new HashMap<>();
+        String actualResult = performer.perform(args, substituteValues);
         assertFalse("Random result is empty!", actualResult.isEmpty());
         assertTrue(actualResult.length() <= 7 && actualResult.length() >= 4);
         int count = 0;
@@ -72,9 +78,10 @@ public class RandomPerformerTest {
     public void performUnknownArgTest() {
         RandomPerformer performer = new RandomPerformer();
         String[] args = new String[]{"alf", "8"};
+        Map<String, String> substituteValues = new HashMap<>();
         String errorMessage = "";
         try {
-            performer.perform(args);
+            performer.perform(args, substituteValues);
         } catch (IllegalArgumentException e) {
             errorMessage = e.getMessage();
         }
@@ -85,9 +92,10 @@ public class RandomPerformerTest {
     public void performWrongArgNumberTest() {
         RandomPerformer performer = new RandomPerformer();
         String[] args = new String[]{"alph", "8", "10"};
+        Map<String, String> substituteValues = new HashMap<>();
         String errorMessage = "";
         try {
-            performer.perform(args);
+            performer.perform(args, substituteValues);
         } catch (IllegalStateException e) {
             errorMessage = e.getMessage();
         }
@@ -98,9 +106,10 @@ public class RandomPerformerTest {
     public void performWrongNumericArgTest() {
         RandomPerformer performer = new RandomPerformer();
         String[] args = new String[]{"alph", "8a"};
+        Map<String, String> substituteValues = new HashMap<>();
         String errorMessage = "";
         try {
-            performer.perform(args);
+            performer.perform(args, substituteValues);
         } catch (NumberFormatException e) {
             errorMessage = e.getMessage();
         }
@@ -111,9 +120,10 @@ public class RandomPerformerTest {
     public void performWrongDoubleArgTest() {
         RandomPerformer performer = new RandomPerformer();
         String[] args = new String[]{"double", "42"};
+        Map<String, String> substituteValues = new HashMap<>();
         String errorMessage = "";
         try {
-            performer.perform(args);
+            performer.perform(args, substituteValues);
         } catch (IllegalArgumentException e) {
             errorMessage = e.getMessage();
         }
@@ -124,9 +134,10 @@ public class RandomPerformerTest {
     public void performCommaDoubleArgTest() {
         RandomPerformer performer = new RandomPerformer();
         String[] args = new String[]{"double", "4,2"};
+        Map<String, String> substituteValues = new HashMap<>();
         String errorMessage = "";
         try {
-            performer.perform(args);
+            performer.perform(args, substituteValues);
         } catch (IllegalArgumentException e) {
             errorMessage = e.getMessage();
         }
@@ -137,7 +148,8 @@ public class RandomPerformerTest {
     public void performNameTest() {
         RandomPerformer performer = new RandomPerformer();
         String[] args = new String[]{"name"};
-        String actualResult = performer.perform(args);
+        Map<String, String> substituteValues = new HashMap<>();
+        String actualResult = performer.perform(args, substituteValues);
         assertFalse("Random result is empty!", actualResult.isEmpty());
         assertTrue(actualResult.length() >= 4 && actualResult.length() <= 8);
         int count = 0;
@@ -161,13 +173,27 @@ public class RandomPerformerTest {
     }
 
     @Test
+    public void performNameSavingTest() {
+        RandomPerformer performer = new RandomPerformer();
+        final String key = "person.email";
+        String[] args = new String[]{"name", key};
+        Map<String, String> substituteValues = new HashMap<>();
+        String actualResult = performer.perform(args, substituteValues);
+        assertFalse("Random result is empty!", actualResult.isEmpty());
+        assertFalse("Substitute values are empty!", substituteValues.isEmpty());
+        assertTrue("Key is absent!", substituteValues.containsKey(key));
+        assertEquals(actualResult.toLowerCase(), substituteValues.get(key));
+    }
+
+    @Test
     public void multipleDoubleTest() {
         RandomPerformer performer = new RandomPerformer();
         String[] args = new String[]{"double", "4.2"};
+        Map<String, String> substituteValues = new HashMap<>();
 
         int count = 0;
         while (count < 1000) {
-            String actualResult = performer.perform(args);
+            String actualResult = performer.perform(args, substituteValues);
             assertFalse(String.format("Number starts with zero on %d time: %s", count, actualResult),
                     actualResult.startsWith("0"));
             count++;

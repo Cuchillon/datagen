@@ -1,12 +1,13 @@
 package com.ferick.alexander.performers;
 
 import com.ferick.alexander.utils.Config;
+import java.util.Map;
 import java.util.Random;
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class RandomPerformer {
 
-    public String perform(final String[] args) {
+    public String perform(final String[] args, final Map<String, String> substituteValues) {
         if (args.length > 2) {
             throw new IllegalStateException("Wrong number of arguments!");
         }
@@ -27,7 +28,7 @@ public class RandomPerformer {
                 result = generateDouble(args[1]);
                 break;
             case Config.NAME:
-                result = generateName();
+                result = (args.length == 2) ? generateNameAndSave(args[1], substituteValues) : generateName();
                 break;
             default:
                 throw new IllegalArgumentException("Unknown argument to perform random replacing!");
@@ -71,5 +72,11 @@ public class RandomPerformer {
         }
 
         return result.toString();
+    }
+
+    private String generateNameAndSave(String key, final Map<String, String> substituteValues) {
+        String name = generateName();
+        substituteValues.put(key, name.toLowerCase());
+        return name;
     }
 }

@@ -18,7 +18,7 @@ public class ReplacementHandler {
 
         switch (method) {
             case Config.RANDOM:
-                result = new RandomPerformer().perform(args);
+                result = new RandomPerformer().perform(args, substituteValues);
                 break;
             case Config.DATE:
                 result = new DatePerformer().perform(args);
